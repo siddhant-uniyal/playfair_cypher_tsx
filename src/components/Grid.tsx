@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useAppContext from "../hooks/use-app-context";
 import { createBigramPl } from "../utils/bigram";
-function nextChar(key, insert, ptr) {
+function nextChar(key : string , insert : string , ptr : number) : [string , number] {
   if (ptr == key.length) insert = String.fromCharCode(insert.charCodeAt(0) + 1);
   else {
     ++ptr;
@@ -13,7 +13,7 @@ function nextChar(key, insert, ptr) {
   }
   return [insert, ptr];
 }
-function intializeCells(N) {
+function intializeCells(N : number) : string[] {
   let cells = [];
   for (let i = 0; i <= N * N; ++i) {
     if (i + 65 == "J".charCodeAt(0)) continue;
@@ -21,7 +21,10 @@ function intializeCells(N) {
   }
   return cells;
 }
-const Grid = (argument) => {
+// type GridArgumentType = {
+
+// }
+const Grid = (argument : object) => {
   console.log({ "GridArgument" : argument});
   
   const { keyInput, plInput, setCipherOutput, bigramIndex, cipherOutput } = useAppContext();
@@ -32,7 +35,7 @@ const Grid = (argument) => {
   const f = bigramPl[bigramIndex], s = bigramPl[bigramIndex + 1];
 
   const [cells, setCells] = useState(() => intializeCells(N));
-  const updateCell = (index, element) => {
+  const updateCell = (index : number, element : string) => {
     setCells((prevCells) =>
       prevCells.map((item, idx) => (idx == index ? element : item))
     );

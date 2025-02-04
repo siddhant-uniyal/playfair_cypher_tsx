@@ -1,10 +1,37 @@
-import { createContext, useState } from "react";
-
-export const AppContext = createContext(null);
+import { createContext, Dispatch, SetStateAction, useState } from "react";
 
 type AppContextProviderProps = {
     children : React.ReactNode
 }
+
+// type StringStateSetterType = {
+//     setter : Dispatch<SetStateAction<string>>
+// }
+
+type AppContextType = {
+  keyInput : string,
+  setKeyInput : Dispatch<SetStateAction<string>>
+  plInput : string,
+  setPlInput : Dispatch<SetStateAction<string>>
+  cipherOutput : string,
+  setCipherOutput : Dispatch<SetStateAction<string>>
+  bigramIndex : number,
+  setBigramIndex : Dispatch<SetStateAction<number>>
+}
+
+const defaultStates = {
+  keyInput : "",
+  setKeyInput : (keyInput : string) => {},
+  plInput : "",
+  setPlInput : (plInput : string) => {},
+  cipherOutput : "",
+  setCipherOutput : (cipherOutput : string) => {},
+  bigramIndex : -1,
+  setBigramIndex : (bigramIndex : number) => {}
+} as AppContextType
+
+export const AppContext = createContext<AppContextType>(defaultStates)
+
 const AppContextProvider = (argument : AppContextProviderProps) => {
   console.log(argument);
   const {children} = argument;
