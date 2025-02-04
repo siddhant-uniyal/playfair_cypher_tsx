@@ -1,7 +1,6 @@
-import React, { useState } from "react";
 import useAppContext from "../hooks/use-app-context";
 import { createBigramPl } from "../utils/bigram";
-const Text = ( argument ) => {
+const Text = ( argument : object ) => {
   console.log({ "TextArgument" : argument })
   const {
     keyInput,
@@ -77,7 +76,7 @@ const Text = ( argument ) => {
               !(index & 1) && (
                 <button
                   key={index}
-                  onClick={() => setBigramIndex((prev) => setBigramIndex(prev === index ? -1 : index))}
+                  onClick={() => setBigramIndex((prev)=> prev === index ? -1 : index)}
                   className={`hover:cursor-pointer ${
                     isSelectedBigram && " text-red-500 font-bold underline"
                   }`}
