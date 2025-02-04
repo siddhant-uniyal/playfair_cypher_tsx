@@ -14,7 +14,9 @@ type AppContextType = {
   cipherOutput : string,
   setCipherOutput : StringStateSetterType
   bigramIndex : number,
-  setBigramIndex : Dispatch<SetStateAction<number>>
+  setBigramIndex : Dispatch<SetStateAction<number>>,
+  opMode : number,
+  setOpMode : Dispatch<SetStateAction<number>>
 }
 
 const defaultStates = {
@@ -25,7 +27,9 @@ const defaultStates = {
   cipherOutput : "",
   setCipherOutput : (cipherOutput : string) => {},
   bigramIndex : -1,
-  setBigramIndex : (bigramIndex : number) => {}
+  setBigramIndex : (bigramIndex : number) => {},
+  opMode : 0,
+  setOpMode : (opMode : number) => {}
 } as AppContextType
 
 export const AppContext = createContext<AppContextType>(defaultStates)
@@ -37,6 +41,7 @@ const AppContextProvider = (argument : AppContextProviderProps) => {
   const [plInput, setPlInput] = useState("");
   const [cipherOutput, setCipherOutput] = useState("");
   const [bigramIndex , setBigramIndex] = useState(25);
+  const [opMode , setOpMode] = useState(0);
 
   return (
     <AppContext.Provider
@@ -49,6 +54,8 @@ const AppContextProvider = (argument : AppContextProviderProps) => {
         setCipherOutput,
         bigramIndex,
         setBigramIndex,
+        opMode,
+        setOpMode
       }}
     >
       {children}

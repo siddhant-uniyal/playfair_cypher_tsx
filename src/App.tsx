@@ -1,15 +1,16 @@
 import "./styles.css";
-import Text from "./components/Text";
-import Grid from "./components/Grid";
-import AppContextProvider from "./context/app-context";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Playfair from "./pages/Playfair";
 const App = () => {
   return (
+
     <div id="body" className="bg-slate-600 flex flex-col items-center ">
-      <AppContextProvider>
-        <Text />
-        <Grid></Grid>
-      </AppContextProvider>
-      
+      <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Playfair></Playfair>}></Route>
+        {/* <Route path="/railfence" element={<Railfence></Railfence>}></Route> */}
+      </Routes>
+        </BrowserRouter>
     </div>
   );
 };

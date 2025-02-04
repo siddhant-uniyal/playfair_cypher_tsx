@@ -27,11 +27,12 @@ function intializeCells(N : number) : string[] {
 const Grid = (argument : object) => {
   console.log({ "GridArgument" : argument});
   
-  const { keyInput, plInput, setCipherOutput, bigramIndex, cipherOutput } = useAppContext();
+  const { keyInput, plInput, setCipherOutput, bigramIndex, cipherOutput , opMode} = useAppContext();
+  console.log(opMode);
   const gridRef = useRef<HTMLDivElement>(null);
   const bigramPl = createBigramPl(plInput);
   const N = 5;
-  const club = "J";
+  const club = "J"; 
   const f = bigramPl[bigramIndex], s = bigramPl[bigramIndex + 1];
 
   const [cells, setCells] = useState(() => intializeCells(N));
@@ -182,18 +183,18 @@ const Grid = (argument : object) => {
       var sX = Math.floor(sVal / N),
         sY = sVal % N;
       if (fX == sX) {
-        ciphertext += matrix[fX][(fY + 1) % N];
-        ciphertext += matrix[sX][(sY + 1) % N];
+        ciphertext += matrix[fX][(fY + (opMode ? -1 : 1) + N) % N];
+        ciphertext += matrix[sX][(sY + (opMode ? -1 : 1) + N) % N];
       } else if (fY == sY) {
-        ciphertext += matrix[(fX + 1) % N][fY];
-        ciphertext += matrix[(sX + 1) % N][sY];
+        ciphertext += matrix[(fX + (opMode ? -1 : 1) + N) % N][fY];
+        ciphertext += matrix[(sX + (opMode ? -1 : 1) + N) % N][sY];
       } else {
         ciphertext += matrix[fX][sY];
         ciphertext += matrix[sX][fY];
       }
     }
     setCipherOutput(ciphertext);
-  }, [keyInput, plInput]);
+  }, [keyInput, plInput , opMode]);
 
   return (
     <>

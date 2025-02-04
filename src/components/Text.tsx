@@ -1,5 +1,6 @@
 import useAppContext from "../hooks/use-app-context";
 import { createBigramPl } from "../utils/bigram";
+let buttonState = 0;
 const Text = ( argument : object ) => {
   console.log({ "TextArgument" : argument })
   const {
@@ -10,10 +11,30 @@ const Text = ( argument : object ) => {
     cipherOutput,
     bigramIndex,
     setBigramIndex,
+    setOpMode
   } = useAppContext();
   const bigramPl = createBigramPl(plInput);
   return (
     <>
+      <div id="mode" className="flex flex-row justify-between items-center w-[200px] h-[50px]">
+        {/* <div>
+        <input type="radio" id="button-encrypt" name="button-encrypt" value="Encrypt" onChange={()=>setOpMode(()=>0)}></input>
+        <label htmlFor="button-encrypt"> ENCRYPT</label><br></br>
+        </div>
+        <div>
+        <input type="radio" id="button-decrypt" name="button-decrypt" value="Decrypt" onChange={()=>setOpMode(()=>1)}></input>
+        <label htmlFor="button-decrypt"> DECRYPT</label><br></br>
+        </div> */}
+
+        <button className={`hover:cursor-pointer border rounded-sm border-black ${!buttonState && " bg-green-300"}`} onClick={() => {
+          buttonState = 0; 
+          setOpMode(()=> 0)
+        }}>ENCRYPT</button>
+        <button className={`hover:cursor-pointer border rounded-sm border-black ${buttonState && " bg-green-300"}`} onClick={() => {
+          buttonState = 1;
+          setOpMode(()=> 1)
+        }}>DECRYPT</button>
+      </div>
       <div id="text" className="flex flex-col h-[300px]">
         <div
           id="key-input"
