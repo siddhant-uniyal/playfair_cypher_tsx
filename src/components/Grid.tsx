@@ -28,7 +28,7 @@ const Grid = (argument : object) => {
   console.log({ "GridArgument" : argument});
   
   const { keyInput, plInput, setCipherOutput, bigramIndex, cipherOutput } = useAppContext();
-  const gridRef = useRef(null);
+  const gridRef = useRef<HTMLDivElement>(null);
   const bigramPl = createBigramPl(plInput);
   const N = 5;
   const club = "J";
@@ -138,7 +138,7 @@ const Grid = (argument : object) => {
           arrow.style.borderBottomRightRadius = "30px"
         }
       }
-      gridRef.current.appendChild(arrow)
+      gridRef.current?.appendChild(arrow)
     }
   } , [bigramIndex])
 

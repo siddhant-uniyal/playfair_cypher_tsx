@@ -1,6 +1,6 @@
 import "./styles.css";
-import Text from "/src/components/Text";
-import Grid from "/src/components/Grid";
+import Text from "./components/Text";
+import Grid from "./components/Grid";
 import AppContextProvider from "./context/app-context";
 const App = () => {
   return (

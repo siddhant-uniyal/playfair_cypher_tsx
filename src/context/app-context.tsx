@@ -4,17 +4,15 @@ type AppContextProviderProps = {
     children : React.ReactNode
 }
 
-// type StringStateSetterType = {
-//     setter : Dispatch<SetStateAction<string>>
-// }
+type StringStateSetterType = Dispatch<SetStateAction<string>>
 
 type AppContextType = {
   keyInput : string,
-  setKeyInput : Dispatch<SetStateAction<string>>
+  setKeyInput : StringStateSetterType
   plInput : string,
-  setPlInput : Dispatch<SetStateAction<string>>
+  setPlInput : StringStateSetterType
   cipherOutput : string,
-  setCipherOutput : Dispatch<SetStateAction<string>>
+  setCipherOutput : StringStateSetterType
   bigramIndex : number,
   setBigramIndex : Dispatch<SetStateAction<number>>
 }
