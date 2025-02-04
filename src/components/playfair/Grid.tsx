@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import useAppContext from "../hooks/use-app-context";
-import { createBigramPl } from "../utils/bigram";
+import useAppContext from "../../hooks/use-app-context";
+import { createBigramPl } from "../../utils/bigram";
 function nextChar(key : string , insert : string , ptr : number) : [string , number] {
   if (ptr == key.length) insert = String.fromCharCode(insert.charCodeAt(0) + 1);
   else {

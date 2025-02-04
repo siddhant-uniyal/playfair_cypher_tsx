@@ -1,5 +1,5 @@
-import useAppContext from "../hooks/use-app-context";
-import { createBigramPl } from "../utils/bigram";
+import useAppContext from "../../hooks/use-app-context";
+import { createBigramPl } from "../../utils/bigram";
 let buttonState = 0;
 const Text = ( argument : object ) => {
   console.log({ "TextArgument" : argument })
