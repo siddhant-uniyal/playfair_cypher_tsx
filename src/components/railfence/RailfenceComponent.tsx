@@ -14,7 +14,6 @@ const RailfenceComponent = () => {
 
   const [keyInput , setKeyInput] = useState("");
   const [plInput , setPlInput] = useState("");
-  // const [matrix , setMatrix] = useState<string[]>([])
 
   const fillMatrix = (plInput : string , rows : number , cols : number ) : string[] => {
 
@@ -32,6 +31,7 @@ const RailfenceComponent = () => {
         Y++
     }
     return matrix
+
   }
 
   let encrypted = "" , decrypted = "";
@@ -45,17 +45,17 @@ const RailfenceComponent = () => {
   }
   const cols = plInput.length + padding
 
-  // const matrix = useRef<string[]>([])
   const matrix = fillMatrix(plInput , rows , cols)
 
-  useEffect(()=>{
+  // useEffect(()=>{
+  const calc = () : string[] => {
 
     const plMod = plInput + "X".repeat(Math.max(cols - plInput.length,0))
     const plLen = plMod.length
 
     if(plInput == "" || keyInput == "" || rows < 2){
       console.log("returning")
-      return
+      return ["" , ""]
     }
 
     let cipher : string[] = []
@@ -85,16 +85,13 @@ const RailfenceComponent = () => {
         }
     }
 
-    encrypted = cipher.join("")
-    decrypted = decrypt.join("")
-
-    // matrix.current = initiliazeMatrix(rows*cols)
-    // setMatrix(()=>initiliazeMatrix(rows*cols))
-
-
     console.log({plMod : plMod , matrix : matrix})
 
-  } , [plInput , keyInput])
+    return [cipher.join("") , decrypt.join("")]
+
+  }
+
+  [encrypted , decrypted] = calc()
 
   console.log({cols : cols})
 
