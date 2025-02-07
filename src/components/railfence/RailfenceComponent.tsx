@@ -1,36 +1,79 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
+
+function initiliazeMatrix(sz : number) : string[]{
+  // console.log(sz)
+  let matrix: string[] = []
+  for(let i = 0 ; i < sz ; ++i){
+    matrix.push(" ")
+  }
+  // console.log({"in_function" : matrix})
+  return matrix
+}
+
 const RailfenceComponent = () => {
+
   const [keyInput , setKeyInput] = useState("");
   const [plInput , setPlInput] = useState("");
-  const [cipherOutput , setCipherOutput] = useState("");
-  const [cipherOutput2 , setCipherOutput2] = useState("");
-  useEffect(()=>{
-    if(keyInput == "") return 
-    let rows = Math.min(Number(keyInput) , plInput.length)
-    if(rows < 2){
-        // setCipherOutput("INVALID")
-        return
+  // const [matrix , setMatrix] = useState<string[]>([])
+
+  const fillMatrix = (plInput : string , rows : number , cols : number ) : string[] => {
+
+    const plMod = plInput + "X".repeat(Math.max(cols - plInput.length,0))
+    const matrix = initiliazeMatrix(rows*cols)
+    let dX = 1
+    let X = 0 , Y = 0
+
+    for(let i = 0 ; i < cols ; ++i){
+        matrix[X*cols + Y] = plMod[i]
+        // setMatrix(()=>matrix.map((item , index) => index === X*cols + Y ? plMod[i] : item))
+        if(X === 0) dX = 1
+        if(X === rows - 1) dX = -1
+        X += dX
+        Y++
     }
-    console.log(rows)
+    return matrix
+  }
+
+  let encrypted = "" , decrypted = "";
+
+  const rows = Number(keyInput)
+  let padding = plInput.length && Math.max(rows - plInput.length , 0)
+  if(plInput.length > 0 && rows !== 1){
+    while(((plInput.length + padding - rows) % (rows - 1) !== 0)){
+      ++padding
+    }
+  }
+  const cols = plInput.length + padding
+
+  // const matrix = useRef<string[]>([])
+  const matrix = fillMatrix(plInput , rows , cols)
+
+  useEffect(()=>{
+
+    const plMod = plInput + "X".repeat(Math.max(cols - plInput.length,0))
+    const plLen = plMod.length
+
+    if(plInput == "" || keyInput == "" || rows < 2){
+      console.log("returning")
+      return
+    }
 
     let cipher : string[] = []
-    let decrypt: string[] = new Array(plInput.length)
-    for(let i = 0 ; i < plInput.length ; ++i){
-        decrypt[i] = 'X';
-    }
-    let k = 0
+    let decrypt: string[] = new Array(plLen)
+    //mode : 0 -> encrypt , 1 -> decrypt
     for(let mode = 0 ; mode < 2 ; ++mode){
+        let k = 0
         let step1 = 2*rows - 2
         let step2 = 0
         for(let i = 0 ; i < rows ; ++i){
             let j = i 
             let prt = false
-            while(j < plInput.length && k < plInput.length){
+            while(j < plLen && k < plLen){
                 if(mode){
-                    decrypt[j] = plInput[k++]
+                    decrypt[j] = plMod[k++]
                 }
                 else{
-                cipher.push(plInput[j])
+                    cipher.push(plMod[j])
                 }
                 if(i == 0) j += step1 
                 else if(i == rows - 1) j += step2 
@@ -42,15 +85,21 @@ const RailfenceComponent = () => {
         }
     }
 
-    // console.log(cipher)
+    encrypted = cipher.join("")
+    decrypted = decrypt.join("")
 
-    setCipherOutput(cipher.join(""))
-    setCipherOutput2(decrypt.join(""))
+    // matrix.current = initiliazeMatrix(rows*cols)
+    // setMatrix(()=>initiliazeMatrix(rows*cols))
+
+
+    console.log({plMod : plMod , matrix : matrix})
 
   } , [plInput , keyInput])
 
+  console.log({cols : cols})
+
   return (
-    <div id="railfence-component">
+    <>
         <div id="key-input-div">
            <label htmlFor="key-input-box">KEY:</label> 
            <input key="key-input-box" value={keyInput} onChange={(e)=>{
@@ -63,11 +112,19 @@ const RailfenceComponent = () => {
                 setPlInput(e.target.value.toUpperCase())
             }}></input>
         </div>
-        <div id="grid-output-div" className="grid">
-            encrypted : {cipherOutput} <br></br>
-            decrypted : {cipherOutput2}
+        <div id="output">
+            encrypted : {encrypted} <br></br>
+            decrypted : {decrypted}
         </div>
-    </div>
+        <div id="grid-output-div" className={`grid size-[300px]`} style={{gridTemplateColumns : `repeat(${cols}, minmax(0, 1fr))`}}>
+            {
+            matrix.map((item , index) => {
+                return (
+                    <div key={index} className="border border-black flex items-center justify-center">{item}</div>
+                )
+            })}
+        </div>
+      </>
   )
 }
 

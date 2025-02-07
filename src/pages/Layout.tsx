@@ -3,7 +3,8 @@ import { Link, Outlet } from 'react-router-dom'
 const Layout = () => {
   return (
     <>
-        <div id="side-navbar" className="absolute left-0">
+        {/* <div id="side-navbar" className="absolute left-0"> */}
+        <div id="side-navbar" className="">
         <ul>
             <li><Link to="/">PLAYFAIR</Link></li>
         </ul>
