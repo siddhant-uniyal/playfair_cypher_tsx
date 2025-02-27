@@ -4,11 +4,9 @@ const Layout = () => {
   return (
     <>
         {/* <div id="side-navbar" className="absolute left-0"> */}
-        <div id="side-navbar" className="">
+        <div id="side-navbar" className="absolute left-0 flex flex-col justify-center items-center h-screen">
         <ul>
             <li><Link to="/">PLAYFAIR</Link></li>
-        </ul>
-        <ul>
             <li><Link to="/railfence">RAILFENCE</Link></li>
         </ul>
         </div>

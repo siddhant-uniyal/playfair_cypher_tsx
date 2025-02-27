@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react"
+import Input from "../common/Input"
 
 function initiliazeMatrix(sz : number) : string[]{
   // console.log(sz)
@@ -97,23 +98,28 @@ const RailfenceComponent = () => {
 
   return (
     <>
-        <div id="key-input-div">
-           <label htmlFor="key-input-box">KEY:</label> 
-           <input key="key-input-box" value={keyInput} onChange={(e)=>{
-                /[1-9][0-9]*$|^$/g.test(e.target.value) && setKeyInput(e.target.value);
-           }}></input>
-        </div>
-        <div id="plaintext-input-div">
-            <label htmlFor="plaintext-input-box">PLAINTEXT:</label>
-            <input key="plaintext-input-box" value={plInput} onChange={(e)=>{
-                setPlInput(e.target.value.toUpperCase())
-            }}></input>
-        </div>
-        <div id="output">
+        <Input 
+          idDiv = "key-input-div" 
+          idInput="key-input-box" 
+          label="KEY: " 
+          value={keyInput} 
+          onChange = {function(e : React.ChangeEvent<HTMLInputElement>){
+            /[1-9][0-9]*$|^$/g.test(e.target.value) && setKeyInput(e.target.value)}} 
+          placeholder="Enter key..."></Input>
+        <Input 
+          idDiv="plaintext-input-div" 
+          idInput="plaintext-input-box" 
+          label="PLAINTEXT: " 
+          value={plInput} 
+          onChange={function(e : React.ChangeEvent<HTMLInputElement>){
+          /[a-zA-Z]*$/.test(e.target.value) && setPlInput(e.target.value.toUpperCase())
+          }} 
+          placeholder="Enter plaintext..."></Input>
+        <div id="output" className="text-center">
             encrypted : {encrypted} <br></br>
             decrypted : {decrypted}
         </div>
-        <div id="grid-output-div" className={`grid size-[300px]`} style={{gridTemplateColumns : `repeat(${cols}, minmax(0, 1fr))`}}>
+        <div id="grid-output-div" className={`grid size-[300px]`} style={{gridTemplateColumns : `repeat(${cols} , minmax(0 , 1fr))`}}>
             {
             matrix.map((item , index) => {
                 return (

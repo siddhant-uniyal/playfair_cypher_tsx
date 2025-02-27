@@ -241,7 +241,6 @@ const Grid = (argument : object) => {
         );
       })}
     </div>
-    <div className="h-[100px]"></div>
     </>
   );
 };

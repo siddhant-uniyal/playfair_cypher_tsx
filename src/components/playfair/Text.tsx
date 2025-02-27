@@ -1,5 +1,6 @@
 import useAppContext from "../../hooks/use-app-context";
 import { createBigramPl } from "../../utils/bigram";
+import Input from "../common/Input";
 let buttonState = 0;
 const Text = ( argument : object ) => {
   console.log({ "TextArgument" : argument })
@@ -36,8 +37,14 @@ const Text = ( argument : object ) => {
         }}>DECRYPT</button>
       </div>
       <div id="text" className="flex flex-col h-[300px]">
-        <div
-          id="key-input"
+        <Input idDiv="key-input-div" label="KEY: " idInput="key-input-box" value={keyInput} placeholder="Enter key..."
+        onChange={(e) => {
+              setBigramIndex(-1);
+              /^[a-zA-Z]*$/.test(e.target.value) &&
+              setKeyInput(e.target.value.toUpperCase())
+            }}></Input>
+        {/* <div
+          id="key-input-div"
           className="flex flex-auto justify-center items-center  gap-x-2"
         >
           <label htmlFor="key" className="text-3xl">
@@ -57,9 +64,10 @@ const Text = ( argument : object ) => {
             }
             }
           />
-        </div>
+        </div> 
+        */}
         <div
-          id="pl-input"
+          id="plaintext-input-div"
           className="flex flex-auto justify-center items-center  gap-x-2"
         >
           <label htmlFor="plaintext" className="text-3xl">
